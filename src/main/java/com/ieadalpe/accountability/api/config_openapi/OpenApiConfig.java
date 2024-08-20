@@ -1,43 +1,27 @@
 package com.ieadalpe.accountability.api.config_openapi;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.Collections;
-
+@Configuration
+@OpenAPIDefinition(info = @Info(
+        title = "Accountability API",
+        version = "v1",
+        description = "Documentação da Accountability API"
+))
 public class OpenApiConfig {
 
-    @Configuration
-    @EnableSwagger2
-    public class SwaggerConfig {
-        @Bean
-        public Docket api() {
-            return new Docket(DocumentationType.SWAGGER_2)
-                    .select()
-                    .apis(RequestHandlerSelectors.basePackage("com.ieadalpe.accountability.api.controller"))
-
-                .paths(PathSelectors.any())
-                    .build()
-                    .apiInfo(apiInfo());
-        }
-
-        private ApiInfo apiInfo() {
-            return new ApiInfo(
-                    "Minha API",
-                    "Descrição da API",
-                    "1.0",
-                    "Terms of service",
-                    new Contact("Tiago Silva", "tiagosilvaprofile.com.br", "tiagosilva.profile@gmail.com"),
-                    "License of API",
-                    "API license URL",
-                    Collections.emptyList());
-        }
+    @Bean
+    public GroupedOpenApi publicApi() {
+        return GroupedOpenApi.builder()
+                .group("user")
+                .pathsToMatch("/api/user/**")  // Ajuste este caminho conforme necessário
+                .pathsToExclude("/error/**")  // Exclui caminhos de erro
+                .build();
     }
 }
+
+
