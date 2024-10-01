@@ -70,7 +70,7 @@ public class AccountabilityController {
         }
 
         if (prestacao.getObservacao() != null){
-            prestacao.setObservacao(prestacao.getObservacao());
+            updateAccountability.setObservacao(prestacao.getObservacao());
         }
 
         // Salva a entidade com os campos atualizados
